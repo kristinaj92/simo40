@@ -24,7 +24,7 @@ button:active{transform:translateY(4px);box-shadow:0 2px 0 #a82a33}
 .dots i.on{background:#e8b230}
 .final .txt{font-size:1.5rem}
 .final .tag{font-size:1.1rem}
-input{width:100%;margin-top:6px;padding:14px;font:inherit;font-size:1.1rem;border-radius:12px;border:2px solid #e8b230;background:rgba(0,0,0,.25);color:#fff7e6;text-align:center;outline:none}input::placeholder{color:rgba(255,247,230,.45)}
+input{width:100%;margin-top:6px;padding:14px;font:inherit;font-size:1.1rem;border-radius:12px;border:2px solid #e8b230;background:rgba(0,0,0,.25);color:#fff7e6;text-align:center;outline:none}input::placeholder{color:rgba(255,247,230,.45);font-size:.85rem}
 canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important}}
 h1{font-size:2.2rem;margin:0;line-height:1.1;color:#fff7e6;text-shadow:0 2px 6px rgba(0,0,0,.3);animation:drop .9s cubic-bezier(.2,1.5,.4,1) both}
@@ -94,7 +94,7 @@ function show(){
   $('em').textContent=c.e;
   const card=$('card');card.className='card'+(c.f?' final':'');
   card.innerHTML='<div class="tag fade">'+c.g+'</div>'+(c.inp
-    ?'<div class="txt fade" style="animation-delay:.15s">I wish…</div><input id="w" class="fade" maxlength="80" placeholder="to learn how to fly, to win the lottery…" autocomplete="off">'
+    ?'<div class="txt fade" style="animation-delay:.15s">I wish…</div><input id="w" class="fade" maxlength="80" placeholder="to learn German, to win the lottery…" autocomplete="off">'
     :'<div class="txt fade" style="animation-delay:.15s">'+c.t+'</div>');
   $('btn').textContent=c.f?'Make another wish ↺':(c.inp?'Send my wish ✨':(i===0?'Light the candle 🕯️':'Next →'));
   dots();
