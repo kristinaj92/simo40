@@ -27,9 +27,11 @@ button:active{transform:translateY(4px);box-shadow:0 2px 0 #a82a33}
 input{width:100%;margin-top:6px;padding:14px;font:inherit;font-size:1.1rem;border-radius:12px;border:2px solid #e8b230;background:rgba(0,0,0,.25);color:#fff7e6;text-align:center;outline:none}input::placeholder{color:rgba(255,247,230,.45)}
 canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important}}
+#snow{z-index:0}
 </style>
 </head>
 <body>
+<canvas id="snow" aria-hidden="true"></canvas>
 <canvas id="fx" aria-hidden="true"></canvas>
 <main>
   <div class="top">A story for Simo</div>
@@ -43,28 +45,28 @@ onerror=function(m,u,l){var c=document.getElementById("card");if(c)c.innerHTML="
 /* Edit the funny lists here. Every run picks one random item from WHEN, HOW and END. */
 const WHEN=[
  "Tomorrow morning at exactly 7:03. Life can be punctual.",
- "Next Wednessday, right after a very long and unnecessary meeting.",
+ "Next Wednesday, right after a very long and unnecessary meeting.",
  "In 3 weeks, 2 days and 1 hour, give or take.",
- "On the next full moon, but you mustn't check your phone.",
+ "On the next full moon, but you mustn’t check your phone.",
  "Soon. The mail dove is on its way.",
  "Right after you try a new pastry. Chew slowly.",
- "Next time you loose your glasses. So, let’s say Friday.",
+ "Next time you lose your glasses. So, let’s say Friday.",
  "Within 40 days, because 40 is today’s lucky number."
 ];
 const HOW=[
  "With the help of a stranger who will say exactly the right thing.",
- "You'll get a text “quick question” and everything will change.",
+ "You’ll get a text “quick question” and everything will change.",
  "By mismatching your socks on purpose.",
  "By accident, while you are looking for your keys.",
  "A suspiciously friendly cashier will have key information for you.",
- "You will submit a form to your govenrment, and it will be approved without anyone reading it.",
+ "You will submit a form to your government, and it will be approved without anyone reading it.",
  "You will say “yes” to something you’d normally answer with “maybe”.",
  "With zero warning."
 ];
 const END=[
  "Congratulations, Simo! Welcome to 40. Officially you are a big boy now. Next check-in at 50. Happy birthday!",
  "Congratulations, Simo! You are now a certified legend, but with slightly weaker knees. Happy birthday!",
- "Congratulations, Simo! You've made it this far. Happy 40th birthday!",
+ "Congratulations, Simo! You’ve made it this far. Happy 40th birthday!",
  "Congratulations, Simo! 40 looks great on you. Happy birthday!"
 ];
 const $=id=>document.getElementById(id);
@@ -132,6 +134,15 @@ function draw(){
   }
   if(P.length)requestAnimationFrame(draw);else{on=false;g.clearRect(0,0,innerWidth,innerHeight)}
 }
+/* falling Finnish flags */
+try{(function(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const c=document.getElementById('snow'),x=c.getContext('2d');let f=[];
+  function init(){const k=Math.min(devicePixelRatio||1,2);c.width=innerWidth*k;c.height=innerHeight*k;x.setTransform(k,0,0,k,0,0);const n=Math.round(Math.min(32,innerWidth/18));f=Array.from({length:n},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,w:16+Math.random()*16,v:.4+Math.random()*.9,p:Math.random()*6,r:Math.random()*6,vr:(Math.random()-.5)*.03,a:.55+Math.random()*.4}))}
+  function flag(s){const w=s.w,h=w*11/18;x.save();x.translate(s.x,s.y);x.rotate(s.r);x.globalAlpha=s.a;x.fillStyle='#fff';x.fillRect(-w/2,-h/2,w,h);x.fillStyle='#003580';x.fillRect(-w/2+w*5/18,-h/2,w*3/18,h);x.fillRect(-w/2,-h/2+h*4/11,w,h*3/11);x.restore()}
+  init();addEventListener('resize',init);
+  (function loop(){x.clearRect(0,0,innerWidth,innerHeight);for(const s of f){s.y+=s.v;s.p+=.02;s.x+=Math.sin(s.p)*.5;s.r+=s.vr;if(s.y>innerHeight+30){s.y=-30;s.x=Math.random()*innerWidth}flag(s)}requestAnimationFrame(loop)})();
+})();}catch(e){}
 </script>
 </body>
 </html>
