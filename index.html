@@ -94,7 +94,7 @@ function show(){
   $('em').textContent=c.e;
   const card=$('card');card.className='card'+(c.f?' final':'');
   card.innerHTML='<div class="tag fade">'+c.g+'</div>'+(c.inp
-    ?'<div class="txt fade" style="animation-delay:.15s">I wish…</div><input id="w" class="fade" maxlength="80" placeholder="to learn German, to win the lottery…" autocomplete="off">'
+    ?'<div class="txt fade" style="animation-delay:.15s">I wish…</div><input id="w" class="fade" maxlength="80" placeholder="to win the lottery…" autocomplete="off">'
     :'<div class="txt fade" style="animation-delay:.15s">'+c.t+'</div>');
   $('btn').textContent=c.f?'Make another wish ↺':(c.inp?'Send my wish ✨':(i===0?'Light the candle 🕯️':'Next →'));
   dots();
