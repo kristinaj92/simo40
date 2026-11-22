@@ -42,30 +42,30 @@ canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index
 onerror=function(m,u,l){var c=document.getElementById("card");if(c)c.innerHTML="Error: "+m+" (line "+l+")"};
 /* Edit the funny lists here. Every run picks one random item from WHEN, HOW and END. */
 const WHEN=[
- "Tomorrow morning at exactly 7:03, just before you find your coffee. The universe is punctual.",
- "Next Tuesday, right after a very long and completely unnecessary meeting.",
- "In 3 weeks, 2 days and 1 slice of cake, give or take a snack.",
- "On the next full moon, as long as you don’t check your phone.",
- "Soon™. The universe says: “it’s in the mail”.",
- "Right after the second slice of cake. Choose slowly.",
- "By the time you find your glasses. So, let’s say Friday.",
+ "Tomorrow morning at exactly 7:03. Life can be punctual.",
+ "Next Wednessday, right after a very long and unnecessary meeting.",
+ "In 3 weeks, 2 days and 1 hour, give or take.",
+ "On the next full moon, but you mustn't check your phone.",
+ "Soon. The mail dove is on its way.",
+ "Right after you try a new pastry. Chew slowly.",
+ "Next time you loose your glasses. So, let’s say Friday.",
  "Within 40 days, because 40 is today’s lucky number."
 ];
 const HOW=[
- "With the help of a stranger in a funny hat, who will say exactly the right thing.",
- "A friend will text “quick question” and everything will change.",
- "Through a series of unplanned events, three bad puns and one very good sandwich.",
- "By accident, while you are looking for your car keys.",
- "A suspiciously friendly pigeon will deliver the key information.",
- "The Department of Fun will process it on Form 40-B, which was approved without anyone reading it.",
- "You will say “yes” to something you’d normally answer with “maybe”, and it all clicks.",
- "With a dramatic entrance, background music and zero warning."
+ "With the help of a stranger who will say exactly the right thing.",
+ "You'll get a text “quick question” and everything will change.",
+ "By mismatching your socks on purpose.",
+ "By accident, while you are looking for your keys.",
+ "A suspiciously friendly cashier will have key information for you.",
+ "You will submit a form to your govenrment, and it will be approved without anyone reading it.",
+ "You will say “yes” to something you’d normally answer with “maybe”.",
+ "With zero warning."
 ];
 const END=[
  "Congratulations, Simo! Welcome to 40. Officially you are a big boy now. Next check-in at 50. Happy birthday!",
- "Congratulations, Simo! You are now a certified legend, with extra wisdom and slightly fewer knees. Happy birthday!",
- "Congratulations, Simo! Wish accepted, warranty extended, cake approved. Happy 40th birthday!",
- "Congratulations, Simo! 40 looks great on you. Next level unlocked. Happy birthday!"
+ "Congratulations, Simo! You are now a certified legend, but with slightly weaker knees. Happy birthday!",
+ "Congratulations, Simo! You've made it this far. Happy 40th birthday!",
+ "Congratulations, Simo! 40 looks great on you. Happy birthday!"
 ];
 const $=id=>document.getElementById(id);
 const pick=a=>a[Math.floor(Math.random()*a.length)];
@@ -73,12 +73,12 @@ const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&q
 let S=[],i=0,wish='';
 function build(){S=[
  {e:"🎂",g:"Today",t:"Simo, something big is happening. Please sit down. You are turning 40."},
- {e:"🕯️",g:"The candles",t:"The wish candle is lit. You take a deep breath, close your eyes and make a wish…"},
+ {e:"🕯️",g:"The candles",t:"The candle is lit. You can now make a wish…"},
  {e:"✍️",g:"Your wish",inp:1},
  {e:"🌠",g:"The wish",t:"“I wish "+esc(wish)+"”"},
- {e:"⏰",g:"When will it happen?",t:pick(WHEN)},
- {e:"🧭",g:"How will it happen?",t:pick(HOW)},
- {e:"🎉",g:"Wish accepted!",t:pick(END),f:1}
+ {e:"⏰",g:"WHEN will it happen?",t:pick(WHEN)},
+ {e:"🧭",g:"HOW will it happen?",t:pick(HOW)},
+ {e:"🎉",g:"Granted!",t:pick(END),f:1}
 ]}
 function dots(){$('dots').innerHTML=S.map((_,k)=>'<i class="'+(k<=i?'on':'')+'"></i>').join('')}
 function show(){
