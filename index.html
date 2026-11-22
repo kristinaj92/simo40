@@ -27,6 +27,11 @@ button:active{transform:translateY(4px);box-shadow:0 2px 0 #a82a33}
 input{width:100%;margin-top:6px;padding:14px;font:inherit;font-size:1.1rem;border-radius:12px;border:2px solid #e8b230;background:rgba(0,0,0,.25);color:#fff7e6;text-align:center;outline:none}input::placeholder{color:rgba(255,247,230,.45)}
 canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important}}
+h1{font-size:2.2rem;margin:0;line-height:1.1;color:#fff7e6;text-shadow:0 2px 6px rgba(0,0,0,.3);animation:drop .9s cubic-bezier(.2,1.5,.4,1) both}
+h1 span{display:inline-block;background:linear-gradient(100deg,#e8b230 0%,#e8b230 40%,#fff3c0 50%,#e8b230 60%,#e8b230 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shine 3.2s linear infinite,bob 2.6s ease-in-out infinite}
+.sub{color:#cdbfe8;font-family:system-ui,sans-serif;font-size:.95rem;margin:10px 0 0;animation:fade .7s .25s ease-out both}
+@keyframes drop{from{opacity:0;transform:translateY(-40px) scale(.9)}to{opacity:1;transform:none}}
+@keyframes shine{from{background-position:150% 0}to{background-position:-100% 0}}
 #snow{z-index:0}
 </style>
 </head>
@@ -34,7 +39,7 @@ canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index
 <canvas id="snow" aria-hidden="true"></canvas>
 <canvas id="fx" aria-hidden="true"></canvas>
 <main>
-  <div class="top">A story for Simo</div>
+  <h1>Happy <span>40th</span> Birthday, Simo!</h1
   <div class="big" id="em">🎂</div>
   <div class="card" id="card"><noscript>JavaScript is turned off in this browser. Please open this page in Chrome or Safari.</noscript></div>
   <button id="btn"></button>
@@ -138,7 +143,7 @@ function draw(){
 try{(function(){
   if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   const c=document.getElementById('snow'),x=c.getContext('2d');let f=[];
-  function init(){const k=Math.min(devicePixelRatio||1,2);c.width=innerWidth*k;c.height=innerHeight*k;x.setTransform(k,0,0,k,0,0);const n=Math.round(Math.min(32,innerWidth/18));f=Array.from({length:n},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,w:16+Math.random()*16,v:.4+Math.random()*.9,p:Math.random()*6,r:Math.random()*6,vr:(Math.random()-.5)*.03,a:.55+Math.random()*.4}))}
+  function init(){const k=Math.min(devicePixelRatio||1,2);c.width=innerWidth*k;c.height=innerHeight*k;x.setTransform(k,0,0,k,0,0);const n=Math.round(Math.min(32,innerWidth/18));f=Array.from({length:n},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,w:14+Math.random()*12,v:.4+Math.random()*.9,p:Math.random()*6,r:Math.random()*6,vr:(Math.random()-.5)*.03,a:.45+Math.random()*.3}))}
   function flag(s){const w=s.w,h=w*11/18;x.save();x.translate(s.x,s.y);x.rotate(s.r);x.globalAlpha=s.a;x.fillStyle='#fff';x.fillRect(-w/2,-h/2,w,h);x.fillStyle='#003580';x.fillRect(-w/2+w*5/18,-h/2,w*3/18,h);x.fillRect(-w/2,-h/2+h*4/11,w,h*3/11);x.restore()}
   init();addEventListener('resize',init);
   (function loop(){x.clearRect(0,0,innerWidth,innerHeight);for(const s of f){s.y+=s.v;s.p+=.02;s.x+=Math.sin(s.p)*.5;s.r+=s.vr;if(s.y>innerHeight+30){s.y=-30;s.x=Math.random()*innerWidth}flag(s)}requestAnimationFrame(loop)})();
