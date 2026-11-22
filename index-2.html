@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy 40th, Simo! 🎂</title>
+<style>
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:radial-gradient(circle at 50% -10%,#4b2a7a 0,#241552 55%,#120a2e 100%) fixed;color:#fff7e6;font-family:Georgia,'Times New Roman',serif;display:flex;justify-content:center;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+main{width:100%;max-width:520px;padding:26px 18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;z-index:1}
+.top{font-family:system-ui,sans-serif;letter-spacing:.2em;font-size:.8rem;color:#e8b230;text-transform:uppercase}
+.big{font-size:6rem;line-height:1;margin:18px 0;filter:drop-shadow(0 8px 14px rgba(0,0,0,.4));animation:bob 2.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-8px) rotate(3deg)}}
+.card{min-height:150px;width:100%;background:rgba(255,255,255,.08);border:2px solid #e8b230;border-radius:20px;padding:22px 18px;display:flex;flex-direction:column;justify-content:center;gap:8px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.tag{font-family:system-ui,sans-serif;font-size:.8rem;letter-spacing:.18em;color:#e8b230;text-transform:uppercase}
+.txt{font-size:1.3rem;line-height:1.45}
+.fade{animation:fade .7s ease-out both}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+button{font:inherit;cursor:pointer;margin-top:22px;background:#ff5a64;color:#fff;border:0;border-radius:14px;padding:15px 30px;font-size:1.1rem;box-shadow:0 6px 0 #a82a33,0 10px 24px -6px #ff5a64;transition:transform .15s}
+button:active{transform:translateY(4px);box-shadow:0 2px 0 #a82a33}
+.dots{margin-top:16px;display:flex;gap:7px}
+.dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.25)}
+.dots i.on{background:#e8b230}
+.final .txt{font-size:1.5rem}
+.final .tag{font-size:1.1rem}
+input{width:100%;margin-top:6px;padding:14px;font:inherit;font-size:1.1rem;border-radius:12px;border:2px solid #e8b230;background:rgba(0,0,0,.25);color:#fff7e6;text-align:center;outline:none}input::placeholder{color:rgba(255,247,230,.45)}
+canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<canvas id="fx" aria-hidden="true"></canvas>
+<main>
+  <div class="top">A story for Simo</div>
+  <div class="big" id="em">🎂</div>
+  <div class="card" id="card"></div>
+  <button id="btn"></button>
+  <div class="dots" id="dots"></div>
+</main>
+<script>
+/* Edit the funny lists here. Every run picks one random item from WHEN, HOW and END. */
+const WHEN=[
+ "Tomorrow morning at exactly 7:03, just before you find your coffee. Life is punctual.",
+ "Next Tuesday, right after a very long and completely unnecessary meeting.",
+ "In 3 weeks, 2 days and 1 good coffee, give or take a snack.",
+ "On the next full moon, as long as you don’t check your phone.",
+ "Soon™. The universe says: “mail dove is on the way”.",
+ "Right after the second slice of cake. Chew slowly.",
+ "By the time you find your glasses. So, let’s say Friday.",
+ "Within 40 days, since 40 is today’s lucky number."
+];
+const HOW=[
+ "With the help of a stranger who will say exactly the right thing.",
+ "Someone will text “by the way” and everything will change.",
+ "Through a series of unplanned events and one very good sandwich.",
+ "By accident, while you are looking for your keys.",
+ "A suspiciously friendly cashier will deliver the key information.",
+ "The Undercover government rep will process it on a fake report, which was approved without anyone reading it.",
+ "You will say “yes” to something you’d normally answer with “maybe”.",
+ "With zero warning."
+];
+const END=[
+ "Congratulations, Simo! Welcome to 40. Officially you are a VERY big boy now. Next check-in at 50. Happy birthday!",
+ "Congratulations, Simo! You are now a certified legend, with slightly weaker knees. Happy birthday!",
+ "Congratulations, Simo! Wish accepted and soon to be deployed. Happy 40th birthday!",
+ "Congratulations, Simo! 40 looks great on you. Happy birthday!"
+ "Congratulations, Simo! Zip zap skibidy tap. Happy birthday!"
+];
+const $=id=>document.getElementById(id);
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let S=[],i=0,wish='';
+function build(){S=[
+ {e:"🎂",g:"Today",t:"Simo, something big is happening. Please sit down. You are turning 40."},
+ {e:"🕯️",g:"The candles",t:"The wish candle is lit. Close your eyes and make a wish…"},
+ {e:"✍️",g:"Your wish",inp:1},
+ {e:"🌠",g:"The wish",t:"“I wish "+esc(wish)+"”"},
+ {e:"⏰",g:"When will it happen?",t:pick(WHEN)},
+ {e:"🧭",g:"How will it happen?",t:pick(HOW)},
+ {e:"🎉",g:"Wish accepted!",t:pick(END),f:1}
+]}
+function dots(){$('dots').innerHTML=S.map((_,k)=>'<i class="'+(k<=i?'on':'')+'"></i>').join('')}
+function show(){
+  const c=S[i];
+  $('em').textContent=c.e;
+  const card=$('card');card.className='card'+(c.f?' final':'');
+  card.innerHTML='<div class="tag fade">'+c.g+'</div>'+(c.inp
+    ?'<div class="txt fade" style="animation-delay:.15s">I wish…</div><input id="w" class="fade" maxlength="80" placeholder="to learn how to fly, to win the lottery…" autocomplete="off">'
+    :'<div class="txt fade" style="animation-delay:.15s">'+c.t+'</div>');
+  $('btn').textContent=c.f?'Make another wish ↺':(c.inp?'Send my wish ✨':(i===0?'Light the candle 🕯️':'Next →'));
+  dots();
+  if(c.inp)setTimeout(()=>$('w')&&$('w').focus(),350);
+  if(c.f){boom(innerWidth/2,innerHeight/2,150);setTimeout(()=>{boom(0,innerHeight,70,-1);boom(innerWidth,innerHeight,70,1)},300)}
+  if(navigator.vibrate)navigator.vibrate(c.f?[30,40,80]:10);
+}
+$('btn').onclick=()=>{
+  if(S[i].inp){
+    const v=$('w').value.trim().replace(/^i wish\s*/i,'');
+    if(!v){$('w').focus();return}
+    wish=v;build();
+  }
+  if(S[i].f){i=2;build()}else i++;
+  show();
+};
+addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='w')$('btn').click()});
+build();show();
+/* confetti */
+const cv=$('fx'),g=cv.getContext('2d');let P=[],on=false;
+function fit(){const k=Math.min(devicePixelRatio||1,2);cv.width=innerWidth*k;cv.height=innerHeight*k;g.setTransform(k,0,0,k,0,0)}
+addEventListener('resize',fit);fit();
+function boom(x,y,n,side){
+  const cols=['#ff5a64','#e8b230','#2e9e5b','#ffffff','#4aa3df','#f28cb1'];
+  for(let k=0;k<n;k++){
+    let a,v;
+    if(!side){a=Math.random()*6.283;v=4+Math.random()*9}
+    else{a=-Math.PI/2+side*(.25+Math.random()*.45);v=11+Math.random()*9}
+    P.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-(side?0:3),w:6+Math.random()*6,h:8+Math.random()*8,r:Math.random()*6,vr:(Math.random()-.5)*.4,c:cols[k%6],s:Math.random()<.3,l:0,o:Math.random()*6});
+  }
+  if(!on){on=true;requestAnimationFrame(draw)}
+}
+function draw(){
+  g.clearRect(0,0,innerWidth,innerHeight);
+  P=P.filter(p=>p.y<innerHeight+40&&p.l<400);
+  for(const p of P){
+    p.l++;p.vy+=.28;p.vx*=.985;p.vy*=.985;p.o+=.12;
+    p.x+=p.vx+Math.sin(p.o)*.8;p.y+=p.vy;p.r+=p.vr;
+    g.save();g.translate(p.x,p.y);g.rotate(p.r);g.globalAlpha=Math.max(0,1-p.l/400);g.fillStyle=p.c;
+    if(p.s){g.beginPath();g.arc(0,0,p.w/2,0,6.283);g.fill()}
+    else{g.scale(1,Math.abs(Math.cos(p.o)));g.fillRect(-p.w/2,-p.h/2,p.w,p.h)}
+    g.restore();
+  }
+  if(P.length)requestAnimationFrame(draw);else{on=false;g.clearRect(0,0,innerWidth,innerHeight)}
+}
+</script>
+</body>
+</html>
