@@ -80,7 +80,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let S=[],i=0,wish='';
 function build(){S=[
- {e:"🎂",g:"Today",t:"Simo, something big is happening. Please sit down. You are turning 40."},
+ {e:"🎂",g:"Today",t:"Simo, it is your birthday. Please take a moment."},
  {e:"🕯️",g:"The candles",t:"The candle is lit. You can now make a wish…"},
  {e:"✍️",g:"Your wish",inp:1},
  {e:"🌠",g:"The wish",t:"“I wish "+esc(wish)+"”"},
